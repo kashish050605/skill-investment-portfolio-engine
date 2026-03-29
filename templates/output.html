@@ -1,4 +1,3 @@
- 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,80 +14,79 @@
     --amber: #ffb347; --amber-dim: rgba(255,179,71,0.10);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.6; min-height: 100vh; padding: 52px 24px 100px; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 18px; line-height: 1.7; min-height: 100vh; padding: 52px 24px 100px; }
   body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px); background-size: 44px 44px; pointer-events: none; z-index: 0; }
   .wrap { max-width: 860px; margin: 0 auto; position: relative; z-index: 1; }
 
-  /* ── Header ── */
   .header { margin-bottom: 56px; }
-  .eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .eyebrow { font-family: 'DM Mono', monospace; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
   .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--amber); animation: pulse 2s infinite; }
   @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
   h1 { font-family: 'DM Serif Display', serif; font-size: clamp(34px, 6vw, 56px); font-weight: 400; line-height: 1.08; color: var(--text); margin-bottom: 14px; }
   h1 em { font-style: italic; color: var(--accent); }
-  .subtitle { font-size: 13px; color: var(--muted); font-family: 'DM Mono', monospace; display: flex; gap: 20px; flex-wrap: wrap; }
+  .subtitle { font-size: 16px; color: var(--muted); font-family: 'DM Mono', monospace; display: flex; gap: 20px; flex-wrap: wrap; }
   .subtitle span { display: flex; align-items: center; gap: 6px; }
   .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--muted); }
   .budget-badge { background: var(--accent-dim); color: var(--accent); padding: 2px 8px; border-radius: 4px; font-weight: bold; }
 
-  /* ── Section label ── */
-  .section-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+  .section-label { font-family: 'DM Mono', monospace; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
   .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-  /* ── Reasoning Trace ── */
   .reasoning-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-bottom: 48px; }
-  .reasoning-header { padding: 16px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; cursor: pointer; }
-  .r-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--accent-dim); display: flex; align-items: center; justify-content: center; font-size: 14px; }
-  .r-title { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; color: var(--text); }
-  .r-toggle { margin-left: auto; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+  .reasoning-header { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; cursor: pointer; }
+  .r-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--accent-dim); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .r-title { font-family: 'DM Mono', monospace; font-size: 15px; font-weight: 500; color: var(--text); }
+  .r-subtitle { font-size: 13px; color: var(--muted); margin-top: 4px; }
+  .r-toggle { margin-left: auto; font-family: 'DM Mono', monospace; font-size: 13px; color: var(--muted); }
   .reasoning-steps { padding: 0 24px 24px; display: none; }
   .reasoning-steps.open { display: block; }
-  .step-item { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--border); animation: fadeIn 0.3s ease both; }
-  .step-num { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent); background: var(--accent-dim); border-radius: 4px; padding: 2px 7px; height: fit-content; margin-top: 2px; }
-  .step-title { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
-  .step-detail { font-size: 12px; color: var(--muted); font-family: 'DM Mono', monospace; line-height: 1.7; }
+  .step-item { display: flex; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--border); animation: fadeIn 0.3s ease both; }
+  .step-num { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); background: var(--accent-dim); border-radius: 4px; padding: 2px 9px; height: fit-content; margin-top: 2px; }
+  .step-title { font-size: 17px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
+  .step-detail { font-size: 15px; color: var(--muted); font-family: 'DM Mono', monospace; line-height: 1.7; }
   @keyframes fadeIn { from{opacity:0;transform:translateX(-6px);} to{opacity:1;transform:translateX(0);} }
 
-  /* ── Recommendations ── */
-  .recs { display: flex; flex-direction: column; gap: 10px; margin-bottom: 48px; }
-  .rec-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; display: flex; align-items: center; gap: 18px; transition: 0.2s; animation: slideUp 0.5s ease both; }
+  .recs { display: flex; flex-direction: column; gap: 12px; margin-bottom: 48px; }
+  .rec-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; display: flex; align-items: center; gap: 18px; transition: 0.2s; animation: slideUp 0.5s ease both; }
   .rec-card:hover { border-color: var(--accent); transform: translateX(3px); }
   @keyframes slideUp { from{opacity:0;transform:translateY(12px);} to{opacity:1;transform:translateY(0);} }
-  
+
   .invest { border-left: 3px solid var(--accent); }
   .hold   { border-left: 3px solid var(--amber); }
   .reduce { border-left: 3px solid var(--red); }
 
-  .rec-icon { width: 38px; height: 38px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 17px; }
+  .rec-icon { width: 44px; height: 44px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
   .invest .rec-icon { background: var(--accent-dim); }
-  .hold .rec-icon { background: var(--amber-dim); }
+  .hold .rec-icon   { background: var(--amber-dim); }
   .reduce .rec-icon { background: var(--red-dim); }
 
   .rec-body { flex: 1; }
-  .rec-skill { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; color: var(--text); }
-  .rec-badge { font-family: 'DM Mono', monospace; font-size: 9px; text-transform: uppercase; padding: 2px 8px; border-radius: 20px; }
+  .rec-skill { font-family: 'DM Mono', monospace; font-size: 17px; font-weight: 500; color: var(--text); }
+  .rec-reason { font-size: 15px; color: var(--muted); margin-top: 5px; }
+  .rec-badge { font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; }
   .badge-invest { background: var(--accent-dim); color: var(--accent); }
   .badge-hold   { background: var(--amber-dim);  color: var(--amber); }
   .badge-reduce { background: var(--red-dim);    color: var(--red); }
 
-  /* ── Time Pills ── */
   .rec-right { display: flex; flex-direction: column; align-items: flex-end; }
-  .time-pill { background: var(--surface2); border: 1px solid var(--border); padding: 8px 12px; border-radius: 8px; min-width: 90px; text-align: right; }
-  .hour-count { font-family: 'DM Mono', monospace; font-size: 22px; font-weight: 500; color: var(--text); line-height: 1; }
-  .hour-unit { font-size: 9px; color: var(--muted); text-transform: uppercase; margin-top: 4px; letter-spacing: 0.1em; }
+  .time-pill { background: var(--surface2); border: 1px solid var(--border); padding: 10px 14px; border-radius: 8px; min-width: 100px; text-align: right; }
+  .hour-count { font-family: 'DM Mono', monospace; font-size: 26px; font-weight: 500; color: var(--text); line-height: 1; }
+  .hour-unit { font-size: 11px; color: var(--muted); text-transform: uppercase; margin-top: 4px; letter-spacing: 0.1em; }
+  .focus-pct { font-family: 'DM Mono'; font-size: 13px; color: var(--accent); margin-top: 8px; font-weight: 500; }
 
-  /* ── Table ── */
   .table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-bottom: 48px; }
   table { width: 100%; border-collapse: collapse; }
-  thead th { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); padding: 14px 20px; text-align: left; text-transform: uppercase; border-bottom: 1px solid var(--border); }
-  tbody td { padding: 15px 20px; font-size: 13px; border-bottom: 1px solid var(--border); }
+  thead th { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--muted); padding: 16px 20px; text-align: left; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+  tbody td { padding: 16px 20px; font-size: 15px; border-bottom: 1px solid var(--border); color: var(--text); }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody td:first-child { font-family: 'DM Mono'; font-weight: 500; font-size: 16px; }
 </style>
 </head>
 <body>
 <div class="wrap">
 
   <div class="header">
-    <div class="eyebrow"><div class="live-dot"></div> Skill Strategy Engine <span class="sep">/</span> {{ name }}</div>
+    <div class="eyebrow"><div class="live-dot"></div> Skill Strategy Engine <span>/</span> {{ name }}</div>
     <h1>Your skill <em>investment</em><br>recommendations</h1>
     <div class="subtitle">
       <span><div class="dot"></div>{{ headline }}</span>
@@ -125,20 +123,18 @@
     <div class="rec-card {{ data.type }}">
       <div class="rec-icon">{{ data.icon }}</div>
       <div class="rec-body">
-        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 5px;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
           <span class="rec-skill">{{ skill }}</span>
           <span class="rec-badge badge-{{ data.type }}">{{ data.status_label }}</span>
         </div>
-        <div style="font-size: 13px; color: var(--muted);">{{ data.reason }}</div>
+        <div class="rec-reason">{{ data.reason }}</div>
       </div>
       <div class="rec-right">
         <div class="time-pill">
           <div class="hour-count">{{ (data.allocation / 100 * budget)|round(1) }}</div>
           <div class="hour-unit">Hours / Week</div>
         </div>
-        <div style="font-family: 'DM Mono'; font-size: 11px; color: var(--accent); margin-top: 8px; font-weight: 500;">
-          {{ data.allocation }}% Focus
-        </div>
+        <div class="focus-pct">{{ data.allocation }}% Focus</div>
       </div>
     </div>
     {% endfor %}
@@ -150,8 +146,8 @@
       <thead>
         <tr>
           <th>Skill</th>
-          <th>Daily Focus</th>
-          <th>Is it trending?</th>
+          <th>Weekly Focus</th>
+          <th>Trending?</th>
           <th>Risk of wasting time</th>
           <th>Career Value</th>
         </tr>
@@ -159,7 +155,7 @@
       <tbody>
         {% for skill, data in skills.items() %}
         <tr>
-          <td style="font-family: 'DM Mono'; font-weight: 500;">{{ skill }}</td>
+          <td>{{ skill }}</td>
           <td>{{ data.allocation }}%</td>
           <td>{{ data.trending }}</td>
           <td>{{ data.risk_label }}</td>
