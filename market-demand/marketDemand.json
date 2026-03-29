@@ -1,0 +1,12 @@
+{
+  "Python": { "demand": "High", "trend": "Rising", "category": "Programming" },
+  "SQL": { "demand": "High", "trend": "Stable", "category": "Data" },
+  "Excel": { "demand": "Medium", "trend": "Stable", "category": "Productivity" },
+  "Machine Learning": { "demand": "High", "trend": "Rising", "category": "AI/ML" },
+  "Power BI": { "demand": "Medium", "trend": "Rising", "category": "Data" },
+  "Tableau": { "demand": "Medium", "trend": "Stable", "category": "Data" },
+  "JavaScript": { "demand": "High", "trend": "Stable", "category": "Programming" },
+  "Blockchain": { "demand": "Low", "trend": "Declining", "category": "Emerging" },
+  "R": { "demand": "Medium", "trend": "Stable", "category": "Data" },
+  "Cloud (AWS/Azure)": { "demand": "High", "trend": "Rising", "category": "Infrastructure" }
+}
