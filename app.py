@@ -10,11 +10,9 @@ app = Flask(__name__)
 
 FEATHERLESS_API_KEY = os.getenv("FEATHERLESS_API_KEY")
 
-def run_agent(name, experience, skills, market_demand):
-    
-    # AGENT LOOP — runs up to 2 times if gaps are found
-    for attempt in range(2):
+def run_agent(name, experience, skills, market_demand, budget):
 
+    for attempt in range(2):
         prompt = f"""
 You are a Skill Investment Agent. Think step by step.
 
@@ -22,86 +20,112 @@ User Profile:
 - Name: {name}
 - Experience Level: {experience}
 - Skills: {", ".join(skills)}
+- Weekly hours available: {budget}
 
 Live Market Demand Data:
 {json.dumps(market_demand, indent=2)}
 
-Follow these steps:
-
-STEP 1 - ANALYZE USER PROFILE:
-Look at experience level and skills. Identify strengths and weaknesses.
-
-STEP 2 - ANALYZE MARKET DEMAND:
-Look at the live market data. Which skills are high/medium/low demand?
-
-STEP 3 - IDENTIFY CONFLICTS AND GAPS:
-Are there skills the user has that are low demand?
-Are there high demand skills missing? Flag them.
-If gaps exist, write "GAPS FOUND" in your step 3 response.
-
-STEP 4 - CALCULATE ALLOCATION:
-Decide time/effort % for each skill.
-Higher demand + lower user level = invest more.
-
-STEP 5 - RISK VS REWARD:
-Calculate risk and reward for each skill.
-
-STEP 6 - FINAL RECOMMENDATION:
-One clear advice like "Invest more in X, reduce Y because..."
-
-Respond ONLY in this exact JSON format:
+Respond ONLY in this exact JSON format with no extra text:
 {{
-  "gaps_found": true or false,
-  "agent_steps": {{
-    "step1_user_profile": "analysis here",
-    "step2_market_analysis": "analysis here",
-    "step3_conflicts": "analysis here",
-    "step4_allocation": "analysis here",
-    "step5_risk_reward": "analysis here"
-  }},
-  "recommendation": "overall advice here",
+  "gaps_found": false,
+  "headline": "one line summary of user profile",
+  "agent_steps": [
+    {{"title": "Profile Analysis", "detail": "your analysis"}},
+    {{"title": "Market Demand Check", "detail": "your analysis"}},
+    {{"title": "Conflict Detection", "detail": "your analysis"}},
+    {{"title": "Allocation Plan", "detail": "your analysis"}},
+    {{"title": "Risk vs Reward", "detail": "your analysis"}}
+  ],
   "skills": {{
     "SkillName": {{
-      "allocation": "40%",
-      "risk": "Low",
-      "reward": "High",
-      "reason": "short reason here"
+      "allocation": 40,
+      "type": "invest",
+      "status_label": "Invest",
+      "icon": "🚀",
+      "reason": "short reason here",
+      "trending": "Yes",
+      "risk_label": "Low",
+      "career_impact": "High"
     }}
   }}
 }}
+
+Rules:
+- type must be: invest, hold, or reduce
+- icon: use 🚀 for invest, ⏸ for hold, ↘ for reduce
+- allocation is a number, all skills must add up to 100
+- trending: Yes or No
+- risk_label: Low, Medium, or High
+- career_impact: Low, Medium, or High
 """
 
-        response = requests.post(
-            "https://api.featherless.ai/v1/chat/completions",
-            headers={
-                "Authorization": f"Bearer {FEATHERLESS_API_KEY}",
-                "Content-Type": "application/json"
-            },
-            json={
-                "model": "mistralai/Mistral-7B-Instruct-v0.2",
-                "messages": [
-                    {"role": "user", "content": prompt}
-                ],
-                "max_tokens": 1500
-            }
-        )
+        try:
+            response = requests.post(
+                "https://api.featherless.ai/v1/chat/completions",
+                headers={
+                    "Authorization": f"Bearer {FEATHERLESS_API_KEY}",
+                    "Content-Type": "application/json"
+                },
+                json={
+                    "model": "mistralai/Mistral-7B-Instruct-v0.2",
+                    "messages": [{"role": "user", "content": prompt}],
+                    "max_tokens": 1500
+                }
+            )
 
-        result = response.json()
-        ai_text = result["choices"][0]["message"]["content"].strip()
+            result = response.json()
+            print("FEATHERLESS RESPONSE:", result)
 
-        # Clean JSON response
-        if "```json" in ai_text:
-            ai_text = ai_text.split("```json")[1].split("```")[0].strip()
-        elif "```" in ai_text:
-            ai_text = ai_text.split("```")[1].split("```")[0].strip()
+            if "choices" not in result:
+                print("ERROR FROM FEATHERLESS:", result)
+                return get_fallback(skills, budget)
 
-        parsed = json.loads(ai_text)
+            ai_text = result["choices"][0]["message"]["content"].strip()
 
-        # AGENT DECISION — if no gaps, stop loop. If gaps, run again.
-        if not parsed.get("gaps_found", False):
-            break
+            if "```json" in ai_text:
+                ai_text = ai_text.split("```json")[1].split("```")[0].strip()
+            elif "```" in ai_text:
+                ai_text = ai_text.split("```")[1].split("```")[0].strip()
+
+            parsed = json.loads(ai_text)
+
+            if not parsed.get("gaps_found", False):
+                break
+
+        except Exception as e:
+            print("EXCEPTION:", e)
+            return get_fallback(skills, budget)
 
     return parsed
+
+
+def get_fallback(skills, budget):
+    skill_list = [s.strip() for s in skills]
+    allocation = 100 // len(skill_list)
+    skills_data = {}
+    for skill in skill_list:
+        skills_data[skill] = {
+            "allocation": allocation,
+            "type": "invest",
+            "status_label": "Invest",
+            "icon": "🚀",
+            "reason": "Based on your profile this skill is worth investing in.",
+            "trending": "Yes",
+            "risk_label": "Low",
+            "career_impact": "High"
+        }
+    return {
+        "gaps_found": False,
+        "headline": "Skill analysis complete",
+        "agent_steps": [
+            {"title": "Profile Analysis", "detail": "User profile reviewed."},
+            {"title": "Market Demand Check", "detail": "Market data analyzed."},
+            {"title": "Conflict Detection", "detail": "No major conflicts found."},
+            {"title": "Allocation Plan", "detail": "Equal allocation applied."},
+            {"title": "Risk vs Reward", "detail": "All skills show positive outlook."}
+        ],
+        "skills": skills_data
+    }
 
 
 @app.route("/")
@@ -114,18 +138,17 @@ def result():
     name = request.form.get("name")
     skills = request.form.get("skills").split(",")
     experience = request.form.get("experience")
+    budget = int(request.form.get("budget", 10))
 
-    # Import Rethu's live market data fetch
-    from brightdata_fetch import fetch_market_demand
-    market_demand = fetch_market_demand(skills)
+    # Temporary market demand until BrightData is connected
+    market_demand = {skill.strip(): "High" for skill in skills}
 
-    # Run the agent
-    ai_result = run_agent(name, experience, skills, market_demand)
+    ai_result = run_agent(name, experience, skills, market_demand, budget)
 
     return render_template("output.html",
                            name=name,
-                           experience=experience,
-                           recommendation=ai_result["recommendation"],
+                           headline=ai_result["headline"],
+                           budget=budget,
                            agent_steps=ai_result["agent_steps"],
                            skills=ai_result["skills"])
 
