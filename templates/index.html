@@ -1,1 +1,38 @@
- 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Skill Investment Portfolio Engine</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 500px; margin: 60px auto; padding: 20px; }
+        h2 { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 14px; }
+        input, select { width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; }
+        button { width: 100%; padding: 12px; background: #1D9E75; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; }
+        p { font-size: 13px; color: #888; margin-top: -15px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <h2>Skill Investment Portfolio Engine</h2>
+    <form action="/result" method="POST">
+        <label>Your Name</label>
+        <input type="text" name="name" placeholder="e.g. Priya" required />
+
+        <label>Your Current Skills</label>
+        <input type="text" name="skills" placeholder="e.g. Python, Excel, Communication" required />
+        <p>Separate skills with commas</p>
+
+        <label>Experience Level</label>
+        <select name="experience" required>
+            <option value="">Select level</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+        </select>
+
+        <label>Weekly Hours Available</label>
+        <input type="number" name="budget" placeholder="e.g. 10" min="1" max="40" required />
+
+        <button type="submit">Analyze My Skills</button>
+    </form>
+</body>
+</html>
